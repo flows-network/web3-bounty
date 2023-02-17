@@ -1,7 +1,7 @@
 This is the web frontend for the bounty program. 
 
 1. Ask the user to log into MetaMask wallet and retrieve a list of `accounts`.
-2. Query a private airtable table using the [query](query/) serverless function to look up records for `accounts[0]`.
+2. Query a private airtable table using the [query](../query/) serverless function to look up records for `accounts[0]`.
 3. Display a list of available (no records) "Log in with XYZ" buttons. Each XYZ has a flow function in this repo. It
   1. Goes through the OATH process.
   2. Saves user profile and `accounts` into airtable.
