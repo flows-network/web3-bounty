@@ -8,3 +8,5 @@ This is the web frontend for the bounty program.
     3. Returns instruction to close the table and return to this page (to avoid re-connecting MetaMask at page reload).
 5. The user clicks on one button and goes through the process to connect. Close tab and comes back to this page after OATH completes.
 6. Repeat from #2 above.
+
+> Suggestion: We could remove the button in Step #5 after the user opens the OATH flow on it. The user can bring it back be reloading the page and re-connecting MetaMask if the OATH process fails for some reason).
