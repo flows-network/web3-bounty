@@ -40,9 +40,12 @@ pub fn run() {
             }
         }
         send_response(
-            200,
-            vec![(String::from("content-type"), String::from("text/html"))],
-            "ok".as_bytes().to_vec(),
+            302,
+            vec![(
+                String::from("location"),
+                std::env::var("REDIRECT_URI").unwrap(),
+            )],
+            vec![],
         );
     });
 }
