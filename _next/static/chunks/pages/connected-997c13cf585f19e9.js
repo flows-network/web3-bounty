@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[728],{4031:function(n,u,e){(window.__NEXT_P=window.__NEXT_P||[]).push(["/connected",function(){return e(4216)}])},4216:function(n,u,e){"use strict";e.r(u);var t=e(7294);let c=()=>((0,t.useEffect)(()=>{window.close()}),null);u.default=c}},function(n){n.O(0,[888,774,179],function(){return n(n.s=4031)}),_N_E=n.O()}]);
