@@ -18,10 +18,16 @@ pub fn run() {
                                 if let Ok(records) = serde_json::to_vec(records) {
                                     send_response(
                                         200,
-                                        vec![(
-                                            String::from("content-type"),
-                                            String::from("application/json"),
-                                        )],
+                                        vec![
+                                            (
+                                                String::from("Content-Type"),
+                                                String::from("application/json"),
+                                            ),
+                                            (
+                                                String::from("Access-Control-Allow-Origin"),
+                                                String::from("*"),
+                                            ),
+                                        ],
                                         records,
                                     );
                                     return;
@@ -34,7 +40,13 @@ pub fn run() {
         }
         send_response(
             400,
-            vec![(String::from("content-type"), String::from("text/html"))],
+            vec![
+                (String::from("Content-Type"), String::from("text/html")),
+                (
+                    String::from("Access-Control-Allow-Origin"),
+                    String::from("*"),
+                ),
+            ],
             "".as_bytes().to_vec(),
         );
     });
