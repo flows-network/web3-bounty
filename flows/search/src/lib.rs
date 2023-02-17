@@ -10,7 +10,7 @@ pub fn run() {
                     "DarumaDocker",
                     "appkkFvmnoRcpDRXY",
                     "GitHub",
-                    format!("{{Web3Account}}='{account}'").as_str(),
+                    format!("LOWER({{Web3Account}})=LOWER('{account}')").as_str(),
                 ) {
                     if records.is_object() {
                         if let Some(records) = records.get("records") {
