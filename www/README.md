@@ -10,3 +10,14 @@ This is the web frontend for the bounty program.
 6. Repeat from #2 above.
 
 > Suggestion: We could remove the button in Step #5 after the user opens the OATH flow on it. The user can bring it back be reloading the page and re-connecting MetaMask if the OATH process fails for some reason).
+
+---
+
+Complete app list: (bonus is not required in the first version)
+
+1. metamask
+2. Telegram (bonus: check if the user joined the telegram channel)
+3. Discord (bonus: check if the user joined the Discord server)
+4. Twitter (bonus: check if the user followed the twitter account)
+5. Email
+6. GitHub -- almost done
