@@ -1,7 +1,7 @@
 use lambda_flows::{request_received, send_response};
 use rand::{distributions::Alphanumeric, Rng};
 use serde_json::Value;
-use store_flows::set;
+use store_flows::global_set;
 use urlencoding::encode;
 
 #[no_mangle]
@@ -10,8 +10,8 @@ pub fn run() {
         if let Some(account) = qry.get("account") {
             if let Some(account) = account.as_str() {
                 let challenge = random_chanllenge();
-                set(
-                    &format!("challenge:{}", account),
+                global_set(
+                    &format!("twitter:challenge:{}", account),
                     Value::String(challenge.clone()),
                 );
                 let twitter_client_id = std::env::var("TWITTER_OAUTH_CLIENT_ID").unwrap();
@@ -21,7 +21,7 @@ pub fn run() {
                     ("code_challenge_method", "plain"),
                     ("code_challenge", &challenge),
                     ("client_id", &twitter_client_id),
-                    ("scope", "users.read offline.access"),
+                    ("scope", "tweet.read users.read offline.access"),
                     ("response_type", "code"),
                     ("redirect_uri", &redirect_uri),
                 ];
