@@ -40,8 +40,14 @@ pub fn run() {
                     )],
                     "".as_bytes().to_vec(),
                 );
+                return;
             }
         }
+        send_response(
+            400,
+            vec![(String::from("Content-Type"), String::from("text/plain"))],
+            "No account".as_bytes().to_vec(),
+        );
     });
 }
 
