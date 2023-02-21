@@ -9,14 +9,16 @@ const All_SAAS = [
     icon: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
     icon_width: 45,
     oauth: 'https://github.com/apps/web3bountydemo/installations/new?state={account}',
-    username_field: 'Login'
+    username_field: 'Login',
+    connected: false
   },
   {
     name: 'Twitter',
     icon: 'https://www.wellybox.com/wp-content/uploads/2023/02/pngkey.com-twitter-logo-png-transparent-27646.png',
     icon_width: 33,
     oauth: `${process.env.NEXT_PUBLIC_TWITTER_PRE_AUTH_PATH}?account={account}`,
-    username_field: 'Username'
+    username_field: 'Username',
+    connected: false
   }
 ];
 
@@ -72,9 +74,9 @@ export default function SaaSList({account, showAlert}: any) {
       <Stack gap={4} className="col-md-5 mx-auto my-5">
         {
           All_SAAS.map((s) => {
-            let connected = saas.find((a: any) => a.name === s.name);
+            s.connected = s.connected || (saas.find((a: any) => a.name === s.name) != undefined);
             return (
-              <Container key={s.name} className={`${connected ? 'bg-success border-success' : 'bg-secondary border-secondary' } border border-opacity-25 bg-gradient bg-opacity-25 rounded p-2`}>
+              <Container key={s.name} className={`${s.connected ? 'bg-success border-success' : 'bg-secondary border-secondary' } border border-opacity-25 bg-gradient bg-opacity-25 rounded p-2`}>
                 <Row className="align-items-center">
                   <Col xs={2}>
                     <div className="d-flex align-items-center justify-content-center border border-1 rounded-2 overflow-hidden bg-white" style={{width: 50, height: 50}}>
@@ -83,10 +85,10 @@ export default function SaaSList({account, showAlert}: any) {
                   </Col>
                   <Col xs={8} style={{fontSize: '0.875em'}}>
                     {
-                      connected
+                      s.connected
                       ? (
                         <span>
-                        Connected to <em>{(connected as any).fields[s.username_field]}</em>
+                        Connected to <em>{(s.connected as any).fields[s.username_field]}</em>
                         </span>
                       )
                       : `Please connect with your ${s.name} account`
@@ -94,7 +96,7 @@ export default function SaaSList({account, showAlert}: any) {
                   </Col>
                   <Col xs={2} className="text-center">
                     {
-                      connected
+                      s.connected
                       ? (
                         <i className="fs-4 bi bi-shield-check"></i>
                       )
