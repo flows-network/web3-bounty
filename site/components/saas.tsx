@@ -10,7 +10,7 @@ const All_SAAS = [
     icon_width: 45,
     oauth: 'https://github.com/apps/web3bountydemo/installations/new?state={account}',
     username_field: 'Login',
-    connected: false
+    connected: null as any
   },
   {
     name: 'Twitter',
@@ -18,7 +18,7 @@ const All_SAAS = [
     icon_width: 33,
     oauth: `${process.env.NEXT_PUBLIC_TWITTER_PRE_AUTH_PATH}?account={account}`,
     username_field: 'Username',
-    connected: false
+    connected: null as any
   }
 ];
 
@@ -74,7 +74,7 @@ export default function SaaSList({account, showAlert}: any) {
       <Stack gap={4} className="col-md-5 mx-auto my-5">
         {
           All_SAAS.map((s) => {
-            s.connected = s.connected || (saas.find((a: any) => a.name === s.name) != undefined);
+            s.connected = s.connected || saas.find((a: any) => a.name === s.name);
             return (
               <Container key={s.name} className={`${s.connected ? 'bg-success border-success' : 'bg-secondary border-secondary' } border border-opacity-25 bg-gradient bg-opacity-25 rounded p-2`}>
                 <Row className="align-items-center">
