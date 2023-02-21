@@ -5,16 +5,14 @@ import { getConnectedSaaS } from '../lib/flows_api';
 
 const All_SAAS = [
   {
-    name: 'github',
-    label: 'GitHub',
+    name: 'GitHub',
     icon: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
     icon_width: 45,
     oauth: 'https://github.com/apps/web3bountydemo/installations/new?state={account}',
     username_field: 'Login'
   },
   {
-    name: 'twitter',
-    label: 'Twitter',
+    name: 'Twitter',
     icon: 'https://www.wellybox.com/wp-content/uploads/2023/02/pngkey.com-twitter-logo-png-transparent-27646.png',
     icon_width: 33,
     oauth: `${process.env.NEXT_PUBLIC_TWITTER_PRE_AUTH_PATH}?account={account}`,
@@ -31,21 +29,21 @@ export default function SaaSList({account, showAlert}: any) {
 
   function connect(name: string) {
     setConnecting(name);
-    keepCheck();
+    keepCheck([name]);
   }
 
-  async function keepCheck() {
+  async function keepCheck(sa: Array<string>) {
     setTimeout(async () => {
-      await check();
+      await check(sa);
       if (connectingRef.current) {
-        keepCheck();
+        keepCheck(sa);
       }
     }, 1000);
   }
 
-  async function check() {
+  async function check(sa: Array<string>) {
     try {
-      let s = await getConnectedSaaS(account, All_SAAS.map(s => s.label));
+      let s = await getConnectedSaaS(account, sa);
 
       if (s) {
         let connected = s.find((a: any) => {
@@ -66,7 +64,7 @@ export default function SaaSList({account, showAlert}: any) {
   }
 
   useEffect(() => {
-    account && check();
+    account && check(All_SAAS.map(s => s.name));
   }, [account]);
 
   if (saas) {
@@ -91,7 +89,7 @@ export default function SaaSList({account, showAlert}: any) {
                         Connected to <em>{(connected as any).fields[s.username_field]}</em>
                         </span>
                       )
-                      : `Please connect with your ${s.label} account`
+                      : `Please connect with your ${s.name} account`
                     }
                   </Col>
                   <Col xs={2} className="text-center">

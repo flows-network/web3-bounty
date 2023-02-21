@@ -14,7 +14,7 @@ export async function getConnectedSaaS(account: string, tables: Array<string>): 
     const data: Array<any> = await response.json(); 
     if (data && data.length > 0) {
       result.push({
-        name: t.toLowerCase(),
+        name: t,
         fields: data[0].fields
       });
     }
