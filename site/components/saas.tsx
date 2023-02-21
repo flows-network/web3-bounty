@@ -103,7 +103,7 @@ export default function SaaSList({account, showAlert}: any) {
                       : (
                         <Button onClick={() => {connect(s.name);} } href={s.oauth.replace('{account}', account)} target="_blank" variant="primary" size="sm" className="rounded-circle" disabled={connecting != null}>
                         {
-                          connecting
+                          connecting == s.name
                           ? <span className="spinner-border spinner-border-sm" role="status">
 </span>
                           : <i className="bi bi-plus-lg"></i>
