@@ -18,7 +18,7 @@ pub fn run() {
                                 if let Some(records) = records.get("records") {
                                     if records.is_array() {
                                         if let Ok(records) = serde_json::to_vec(records) {
-                                            send_response(
+                                            return send_response(
                                                 200,
                                                 vec![
                                                     (
@@ -32,12 +32,26 @@ pub fn run() {
                                                 ],
                                                 records,
                                             );
-                                            return;
                                         }
                                     }
                                 }
                             }
                         }
+
+                        return send_response(
+                            200,
+                            vec![
+                                (
+                                    String::from("Content-Type"),
+                                    String::from("application/json"),
+                                ),
+                                (
+                                    String::from("Access-Control-Allow-Origin"),
+                                    String::from("*"),
+                                ),
+                            ],
+                            "[]".as_bytes().to_vec(),
+                        );
                     }
                 }
             }
