@@ -8,6 +8,10 @@ on:
   workflow_dispatch:
     branches: [ main ]
 
+env:
+  NEXT_PUBLIC_SEARCH_PATH: "https://code.flows.network/lambda/dElmOPdyu2"
+  NEXT_PUBLIC_TWITTER_PRE_AUTH_PATH: "https://code.flows.network/lambda/cmdMywuHov"
+
 jobs:
   deploy:
     runs-on: ubuntu-20.04
