@@ -1,0 +1,7 @@
+[workspace]
+members = [
+  "search",
+  "github-oauth",
+  "twitter-pre-auth",
+  "twitter-oauth"
+]

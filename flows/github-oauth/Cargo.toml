@@ -1,5 +1,5 @@
 [package]
-name = "web3-oauth"
+name = "web3bounty-github-oauth"
 version = "0.1.0"
 edition = "2021"
 

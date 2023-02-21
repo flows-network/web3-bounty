@@ -18,30 +18,29 @@ pub fn run() {
                     if let Some(code) = code.as_str() {
                         if let Some(token) = get_access(account, code) {
                             if let Some(user) = get_user(&token) {
-                                /*
-                                if let Some(account) = qry.get("state") {
-                                    if let Some(account) = account.as_str() {
-                                        let record = serde_json::json!({
-                                            "Web3Account": account,
-                                            "Login": user["login"],
-                                            "Name": user["name"],
-                                            "Company": user["company"],
-                                            "Blog": user["blog"],
-                                            "Email": user["email"],
-                                            "Location": user["location"],
-                                            "Bio": user["bio"],
-                                            "Twitter Username": user["twitter_username"],
-                                            "Created At": user["created_at"]
-                                        });
-                                        create_record(
-                                            "DarumaDockerDev",
-                                            "appLjd0KmtnCf3l0r",
-                                            "OAuth Users",
-                                            record,
-                                        );
-                                    }
-                                }
-                                */
+                                let data = &user["data"];
+                                let record = serde_json::json!({
+                                    "Web3Account": account,
+                                    "Username": data["username"],
+                                    "Name": data["name"],
+                                    "Verified": format!("{}", data["verified"]),
+                                    "Verified Type": data["verified_type"],
+                                    "Protected": format!("{}", data["protected"]),
+                                    "Id": data["id"],
+                                    "Created At": data["created_at"],
+                                    "Profile Image Url": data["profile_image_url"],
+                                    "Description": user["description"],
+                                    "Followers Count": data["public_metrics"]["followers_count"],
+                                    "Following Count": data["public_metrics"]["following_count"],
+                                    "Tweet Count": data["public_metrics"]["tweet_count"],
+                                    "Listed Count": data["public_metrics"]["listed_count"]
+                                });
+                                create_record(
+                                    &std::env::var("AIRTABLE_ACCOUNT_NAME").unwrap(),
+                                    &std::env::var("AIRTABLE_BASE_ID").unwrap(),
+                                    "Twitter",
+                                    record,
+                                );
                             }
                         }
                     }
@@ -51,10 +50,10 @@ pub fn run() {
         send_response(
             302,
             vec![(
-                String::from("Location"),
-                String::from("https://www.google.com"),
+                String::from("location"),
+                std::env::var("REDIRECT_URI").unwrap(),
             )],
-            "".as_bytes().to_vec(),
+            vec![],
         );
     });
 }
@@ -75,7 +74,10 @@ fn get_access(account: &str, code: &str) -> Option<String> {
             "client_id",
             std::env::var("TWITTER_OAUTH_CLIENT_ID").unwrap(),
         ),
-        ("redirect_uri", std::env::var("REDIRECT_URI").unwrap()),
+        (
+            "redirect_uri",
+            std::env::var("TWITTER_OAUTH_REDIRECT_URI").unwrap(),
+        ),
         ("code", code.to_string()),
     ];
     let params = params

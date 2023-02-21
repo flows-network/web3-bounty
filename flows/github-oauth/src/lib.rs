@@ -28,8 +28,8 @@ pub fn run() {
                                     "Created At": user["created_at"]
                                 });
                                 create_record(
-                                    "DarumaDocker",
-                                    "appkkFvmnoRcpDRXY",
+                                    &std::env::var("AIRTABLE_ACCOUNT_NAME").unwrap(),
+                                    &std::env::var("AIRTABLE_BASE_ID").unwrap(),
                                     "GitHub",
                                     record,
                                 );
