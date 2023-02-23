@@ -1,5 +1,5 @@
 [package]
-name = "web3bounty-email-send"
+name = "web3bounty-email-verify"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,6 +8,7 @@ path = "src/lib.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
+airtable-flows = "0.1"
 lambda-flows = "0.2"
 serde_json = "1.0"
 store-flows = "0.2"

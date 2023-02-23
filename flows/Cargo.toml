@@ -4,5 +4,6 @@ members = [
   "github-oauth",
   "twitter-pre-auth",
   "twitter-oauth",
-  "email-send"
+  "email-send",
+  "email-verify"
 ]
