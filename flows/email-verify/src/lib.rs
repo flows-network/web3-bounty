@@ -26,10 +26,7 @@ pub fn run() {
 
                             return send_response(
                                 200,
-                                vec![(
-                                    String::from("Content-Type"),
-                                    std::env::var("text/html").unwrap(),
-                                )],
+                                vec![(String::from("Content-Type"), String::from("text/html"))],
                                 r#"Email has been verified.
                                 <script>
                                     setTimeout(function() {
