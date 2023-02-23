@@ -3,5 +3,6 @@ members = [
   "search",
   "github-oauth",
   "twitter-pre-auth",
-  "twitter-oauth"
+  "twitter-oauth",
+  "email-send"
 ]
