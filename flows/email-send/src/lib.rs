@@ -31,7 +31,7 @@ Click the link below to verify your email<br/>
 <a href="{verifier_lambda}?challenge={challenge}">{verifier_lambda}?challenge={challenge}</a>"#
                             )),
                         };
-                        match send_email("wangshishuo@wespoke.com", &email) {
+                        match send_email("vivian@secondstate.io", &email) {
                             Ok(_) => return send_response(200, vec![], vec![]),
                             Err(e) => return send_response(500, vec![], e.as_bytes().to_vec()),
                         }
