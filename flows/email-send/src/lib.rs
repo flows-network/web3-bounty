@@ -32,14 +32,39 @@ Click the link below to verify your email<br/>
                             )),
                         };
                         match send_email("vivian@secondstate.io", &email) {
-                            Ok(_) => return send_response(200, vec![], vec![]),
-                            Err(e) => return send_response(500, vec![], e.as_bytes().to_vec()),
+                            Ok(_) => {
+                                return send_response(
+                                    200,
+                                    vec![(
+                                        String::from("Access-Control-Allow-Origin"),
+                                        String::from("*"),
+                                    )],
+                                    vec![],
+                                )
+                            }
+                            Err(e) => {
+                                return send_response(
+                                    500,
+                                    vec![(
+                                        String::from("Access-Control-Allow-Origin"),
+                                        String::from("*"),
+                                    )],
+                                    e.as_bytes().to_vec(),
+                                )
+                            }
                         }
                     }
                 }
             }
         }
-        send_response(400, vec![], vec![]);
+        send_response(
+            400,
+            vec![(
+                String::from("Access-Control-Allow-Origin"),
+                String::from("*"),
+            )],
+            vec![],
+        );
     });
 }
 
