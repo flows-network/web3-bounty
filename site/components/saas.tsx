@@ -135,7 +135,7 @@ export default function SaaSList({account, showAlert}: any) {
                           <i className="fs-4 bi bi-shield-check"></i>
                         )
                         : (
-                          <Button onClick={() => {connect(s.name);} } href={s.oauth.replace('{account}', account)} target="_blank" variant="primary" size="sm" className="rounded-circle" disabled={connecting != null}>
+                          <Button onClick={() => {connect(s.name);} } href={s.oauth?.replace('{account}', account)} target="_blank" variant="primary" size="sm" className="rounded-circle" disabled={connecting != null}>
                           {
                             connecting == s.name
                             ? <span className="spinner-border spinner-border-sm" role="status">
