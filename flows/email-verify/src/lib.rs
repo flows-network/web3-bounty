@@ -1,4 +1,4 @@
-use airtable_flows::create_record;
+use airtable_flows::{search_records, update_record};
 use lambda_flows::{request_received, send_response};
 use store_flows::global_get;
 
@@ -13,30 +13,35 @@ pub fn run() {
                             let account = v.get("account").unwrap();
                             let email = v.get("email").unwrap();
 
-                            let record = serde_json::json!({
-                                "Web3Account": account,
-                                "Email": email
-                            });
-                            create_record(
-                                &std::env::var("AIRTABLE_ACCOUNT_NAME").unwrap(),
-                                &std::env::var("AIRTABLE_BASE_ID").unwrap(),
-                                "Email",
-                                record,
-                            );
+                            if let Some(record_id) = find_record(
+                                account.as_str().unwrap_or_default(),
+                                email.as_str().unwrap_or_default(),
+                            ) {
+                                let record = serde_json::json!({
+                                    "Verified": true
+                                });
+                                update_record(
+                                    &std::env::var("AIRTABLE_ACCOUNT_NAME").unwrap(),
+                                    &std::env::var("AIRTABLE_BASE_ID").unwrap(),
+                                    "Email",
+                                    &record_id,
+                                    record,
+                                );
 
-                            return send_response(
-                                200,
-                                vec![(String::from("Content-Type"), String::from("text/html"))],
-                                r#"Email has been verified.
-                                <script>
-                                    setTimeout(function() {
-                                        window.close();
-                                    }, 1500);
-                                </script>
-                                "#
-                                .as_bytes()
-                                .to_vec(),
-                            );
+                                return send_response(
+                                    200,
+                                    vec![(String::from("Content-Type"), String::from("text/html"))],
+                                    r#"Email has been verified.
+                                    <script>
+                                        setTimeout(function() {
+                                            window.close();
+                                        }, 1500);
+                                    </script>
+                                    "#
+                                    .as_bytes()
+                                    .to_vec(),
+                                );
+                            }
                         }
                     }
                 }
@@ -44,4 +49,26 @@ pub fn run() {
         }
         send_response(400, vec![], "Invalid challenge code".as_bytes().to_vec());
     });
+}
+
+fn find_record(account: &str, email: &str) -> Option<String> {
+    if let Some(records) = search_records(
+        &std::env::var("AIRTABLE_ACCOUNT_NAME").unwrap(),
+        &std::env::var("AIRTABLE_BASE_ID").unwrap(),
+        "Email",
+        format!(
+            "AND(LOWER({{Web3Account}})=LOWER('{account}'), LOWER({{Email}})=LOWER('{email}'))"
+        )
+        .as_str(),
+    ) {
+        if records.is_object() {
+            if let Some(records) = records.get("records") {
+                if records.is_array() {
+                    return Some(records[0]["id"].as_str().unwrap_or_default().to_string());
+                }
+            }
+        }
+    }
+
+    None
 }
