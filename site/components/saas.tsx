@@ -82,7 +82,7 @@ export default function SaaSList({account, showAlert}: any) {
 
       if (s) {
         let connected = s.find((a: any) => {
-          return a.name == connectingRef.current;
+          return a.name == connectingRef.current && (a.name !== 'Email' || a.fields.Verified == true);
         });
         if (connected) {
           setConnecting(null);
@@ -107,7 +107,7 @@ export default function SaaSList({account, showAlert}: any) {
       <Stack gap={4} className="col-md-5 mx-auto my-5">
         {
           All_SAAS.map((s) => {
-            s.connected = s.connected || saas.find((a: any) => a.name === s.name);
+            s.connected = s.connected || saas.find((a: any) => (a.name === s.name && (a.name !== 'Email' || a.fields.Verified == true)));
             return s.name !== 'Email'
               ? (
                 <Container key={s.name} className={`${s.connected ? 'bg-success border-success' : 'bg-secondary border-secondary' } border border-opacity-25 bg-gradient bg-opacity-25 rounded p-2`}>
